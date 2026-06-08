@@ -1,0 +1,81 @@
+{
+  "expenses": [
+    {
+      "id": "exp-1",
+      "amount": 1200.5,
+      "category": "Food",
+      "date": "2026-06-05",
+      "note": "Weekly grocery shopping"
+    },
+    {
+      "id": "exp-2",
+      "amount": 350,
+      "category": "Transport",
+      "date": "2026-06-06",
+      "note": "Uber ride to office"
+    },
+    {
+      "id": "exp-3",
+      "amount": 4500,
+      "category": "Bills",
+      "date": "2026-06-01",
+      "note": "Electricity bill"
+    },
+    {
+      "id": "exp-4",
+      "amount": 1800,
+      "category": "Entertainment",
+      "date": "2026-06-07",
+      "note": "Movie night and snacks"
+    },
+    {
+      "id": "exp-5",
+      "amount": 450,
+      "category": "Food",
+      "date": "2026-06-02",
+      "note": "Lunch with team"
+    },
+    {
+      "id": "exp-6",
+      "amount": 600,
+      "category": "Other",
+      "date": "2026-06-03",
+      "note": "Gift for friend"
+    },
+    {
+      "id": "exp-7",
+      "amount": 4500,
+      "category": "Bills",
+      "date": "2026-05-01",
+      "note": "Electricity bill May"
+    },
+    {
+      "id": "exp-8",
+      "amount": 3200,
+      "category": "Food",
+      "date": "2026-05-15",
+      "note": "Monthly bulk grocery"
+    },
+    {
+      "id": "exp-9",
+      "amount": 500,
+      "category": "Transport",
+      "date": "2026-05-20",
+      "note": "Train ticket"
+    },
+    {
+      "id": "exp-1780909073730-ew3wefou0",
+      "amount": 100,
+      "category": "Food",
+      "date": "2026-06-08",
+      "note": "noodles"
+    }
+  ],
+  "budgets": {
+    "Food": 5000,
+    "Transport": 2000,
+    "Bills": 10000,
+    "Entertainment": 3000,
+    "Other": 1500
+  }
+}
