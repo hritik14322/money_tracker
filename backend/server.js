@@ -12,28 +12,36 @@ const DATA_FILE = process.env.NODE_ENV === 'test'
   : path.join(__dirname, 'data', 'expenses.json');
 const VALID_CATEGORIES = ['Food', 'Transport', 'Bills', 'Entertainment', 'Other'];
 
+let dataStore = null;
+
 // Helper to read data
 function readData() {
+  if (process.env.NODE_ENV !== 'test' && dataStore) {
+    return dataStore;
+  }
+
   try {
-    if (!fs.existsSync(DATA_FILE)) {
-      return { 
-        expenses: [], 
-        budgets: { Food: 5000, Transport: 2000, Bills: 10000, Entertainment: 3000, Other: 1500 } 
-      };
+    if (fs.existsSync(DATA_FILE)) {
+      const data = fs.readFileSync(DATA_FILE, 'utf8');
+      dataStore = JSON.parse(data);
+      return dataStore;
     }
-    const data = fs.readFileSync(DATA_FILE, 'utf8');
-    return JSON.parse(data);
   } catch (err) {
     console.error('Error reading database file:', err);
-    return { 
-      expenses: [], 
-      budgets: { Food: 5000, Transport: 2000, Bills: 10000, Entertainment: 3000, Other: 1500 } 
-    };
   }
+
+  // Fallback to default schema if file is missing/corrupted
+  dataStore = { 
+    expenses: [], 
+    budgets: { Food: 5000, Transport: 2000, Bills: 10000, Entertainment: 3000, Other: 1500 } 
+  };
+  return dataStore;
 }
 
 // Helper to write data
 function writeData(data) {
+  dataStore = data;
+
   try {
     const dir = path.dirname(DATA_FILE);
     if (!fs.existsSync(dir)) {
@@ -41,7 +49,7 @@ function writeData(data) {
     }
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf8');
   } catch (err) {
-    console.error('Error writing to database file:', err);
+    console.warn('Disk storage write failed (this is normal on read-only platforms like Vercel). Transaction cached in memory:', err.message);
   }
 }
 
