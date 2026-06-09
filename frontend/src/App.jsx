@@ -6,7 +6,9 @@ import ExpenseTable from './components/ExpenseTable';
 import ExpenseForm from './components/ExpenseForm';
 import BudgetModal from './components/BudgetModal';
 
-const API_BASE = 'http://localhost:5001/api';
+const API_BASE = import.meta.env.DEV
+  ? 'http://localhost:5001/api'
+  : '/_/backend/api';
 
 export default function App() {
   const [expenses, setExpenses] = useState([]);

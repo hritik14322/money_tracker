@@ -90,15 +90,16 @@ function validateExpense(req, res, next) {
 }
 
 // API Routes
+const router = express.Router();
 
 // Get all expenses
-app.get('/api/expenses', (req, res) => {
+router.get('/expenses', (req, res) => {
   const data = readData();
   res.json({ expenses: data.expenses });
 });
 
 // Add an expense
-app.post('/api/expenses', validateExpense, (req, res) => {
+router.post('/expenses', validateExpense, (req, res) => {
   const data = readData();
   const newExpense = {
     id: 'exp-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11),
@@ -110,7 +111,7 @@ app.post('/api/expenses', validateExpense, (req, res) => {
 });
 
 // Edit an expense
-app.put('/api/expenses/:id', validateExpense, (req, res) => {
+router.put('/expenses/:id', validateExpense, (req, res) => {
   const { id } = req.params;
   const data = readData();
   const index = data.expenses.findIndex(e => e.id === id);
@@ -128,7 +129,7 @@ app.put('/api/expenses/:id', validateExpense, (req, res) => {
 });
 
 // Delete an expense
-app.delete('/api/expenses/:id', (req, res) => {
+router.delete('/expenses/:id', (req, res) => {
   const { id } = req.params;
   const data = readData();
   const initialLength = data.expenses.length;
@@ -143,13 +144,13 @@ app.delete('/api/expenses/:id', (req, res) => {
 });
 
 // Get budgets
-app.get('/api/budgets', (req, res) => {
+router.get('/budgets', (req, res) => {
   const data = readData();
   res.json({ budgets: data.budgets || {} });
 });
 
 // Update budgets
-app.put('/api/budgets', (req, res) => {
+router.put('/budgets', (req, res) => {
   const budgets = req.body;
   
   if (!budgets || typeof budgets !== 'object') {
@@ -173,6 +174,10 @@ app.put('/api/budgets', (req, res) => {
   writeData(data);
   res.json({ budgets: data.budgets });
 });
+
+// Mount the router for local and production prefixes
+app.use('/api', router);
+app.use('/_/backend/api', router);
 
 const PORT = process.env.PORT || 5001;
 if (process.env.NODE_ENV !== 'test') {
